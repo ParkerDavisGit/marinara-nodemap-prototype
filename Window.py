@@ -8,5 +8,10 @@ class Window:
         self.WINDOW_NAME   = name
 
         # Defining the Window
+        pygame.init()
         self.window = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
         pygame.display.set_caption(self.WINDOW_NAME)
+    
+
+    def render(self):
+        pygame.display.flip()

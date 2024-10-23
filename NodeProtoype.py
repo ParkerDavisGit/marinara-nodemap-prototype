@@ -1,4 +1,7 @@
 import Window
+import InputHandler
+import NodeMap.NodeMap
+
 import pygame
 
 class NodePrototype:
@@ -6,6 +9,18 @@ class NodePrototype:
         # Window
         self.__window = Window.Window(800, 500, "Marinara Node Map Prototype")
         self.__running = True
+
+        self.__input_handler = InputHandler.InputHandler()
+
+
+    #=====[ THE BIG THREE ]==========
+    def testFunc(self):
+        print("Activating Test Mode")
+        print("")
+        var = NodeMap.NodeMap.NodeMap()
+        print(var.__str__())
+        print("")
+        print("Deactivating Test Mode")
 
     #=====[ THE BIG THREE ]==========
     def handleEvents(self):
@@ -16,6 +31,10 @@ class NodePrototype:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.regenerateNodes()
+                    self.testFunc()
+                
+                if event.key == pygame.K_ESCAPE:
+                    self.quitProgram()
 
 
     def updateProgram(self):
@@ -26,8 +45,7 @@ class NodePrototype:
 
     #=====[ KEYBOARD EVENTS ]=========
     def quitProgram(self):
-        self.running = False
-        pygame.quit()
+        self.__running = False
     
     def regenerateNodes(self):
         ...
@@ -38,3 +56,5 @@ class NodePrototype:
             self.handleEvents()
             self.updateProgram()
             self.renderProgram()
+        
+        pygame.quit()
