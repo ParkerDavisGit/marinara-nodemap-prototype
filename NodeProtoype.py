@@ -1,13 +1,14 @@
 import Window
 import InputHandler
-import NodeMap.NodeMap
+import NodeMap.NodeMapHandler as NODEMAPHANDLER
 
 import pygame
 
 class NodePrototype:
     def __init__(self):
         # Window
-        self.__window = Window.Window(800, 500, "Marinara Node Map Prototype")
+        self.__window  = Window.Window(800, 500, "Marinara Node Map Prototype")
+        self.__nodes   = NODEMAPHANDLER.NodeMapHandler()
         self.__running = True
 
         self.__input_handler = InputHandler.InputHandler()
@@ -17,8 +18,7 @@ class NodePrototype:
     def testFunc(self):
         print("Activating Test Mode")
         print("")
-        var = NodeMap.NodeMap.NodeMap()
-        print(var.__str__())
+        print(self.__nodes.__str__())
         print("")
         print("Deactivating Test Mode")
 
