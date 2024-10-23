@@ -41,7 +41,7 @@ class NodePrototype:
         ...
     
     def renderProgram(self):
-        ...
+        self.__window.render()
 
     #=====[ KEYBOARD EVENTS ]=========
     def quitProgram(self):
