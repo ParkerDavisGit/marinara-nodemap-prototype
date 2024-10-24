@@ -19,9 +19,6 @@ class NodePrototype:
     def testFunc(self):
         print("Activating Test Mode")
         print("")
-        self.__nodes.setCell(1, 1, "TREASURE")
-        self.__nodes.render()
-        print(self.__nodes.__str__())
         print("")
         print("Deactivating Test Mode")
 
