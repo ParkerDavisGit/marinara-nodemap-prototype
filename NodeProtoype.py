@@ -1,6 +1,6 @@
 import Window
 import InputHandler
-import NodeMap.NodeMapHandler as NODEMAPHANDLER
+import NodeMap.NodeMap as NODEMAP
 
 import pygame
 
@@ -8,7 +8,8 @@ class NodePrototype:
     def __init__(self):
         # Window
         self.__window  = Window.Window(800, 500, "Marinara Node Map Prototype")
-        self.__nodes   = NODEMAPHANDLER.NodeMapHandler()
+        self.__nodes   = NODEMAP.NodeMap(
+            self.__window.getNodeSurface(), self.__window.getConnectionSurface())
         self.__running = True
 
         self.__input_handler = InputHandler.InputHandler()
@@ -18,6 +19,8 @@ class NodePrototype:
     def testFunc(self):
         print("Activating Test Mode")
         print("")
+        self.__nodes.setCell(1, 1, "TREASURE")
+        self.__nodes.render()
         print(self.__nodes.__str__())
         print("")
         print("Deactivating Test Mode")
@@ -41,7 +44,7 @@ class NodePrototype:
         ...
     
     def renderProgram(self):
-        ...
+        self.__window.render()
 
     #=====[ KEYBOARD EVENTS ]=========
     def quitProgram(self):
