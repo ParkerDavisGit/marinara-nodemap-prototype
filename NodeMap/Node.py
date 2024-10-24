@@ -8,6 +8,12 @@ class Node:
     def getPos(self):
         return (self.__x, self.__y)
     
+    def getX(self):
+        return self.__x
+    
+    def getY(self):
+        return self.__y
+    
     def getType(self):
         return self.__type
 
@@ -15,9 +21,11 @@ class Node:
     def at(self, x, y):
         self.__x = x
         self.__y = y
+        return self
     
     def ofType(self, new_type):
         self.__type = new_type
+        return self
 
     #=====[ DUNDER ZONE ]==========
     def __str__(self):
