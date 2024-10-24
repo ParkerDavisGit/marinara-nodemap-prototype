@@ -29,7 +29,7 @@ class Node:
 
     #=====[ DUNDER ZONE ]==========
     def __str__(self):
-        return f"{self.__type} - ({self.__x}, {self.__y})"
+        return f"{self.__type}"
     
     def __deepcopy__(self):
         return Node().at(self.__x, self.__y).ofType(self.__type)

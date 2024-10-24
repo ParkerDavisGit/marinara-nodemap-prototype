@@ -11,9 +11,14 @@ class NodeMap:
     def render(self):
         for row in self.__node_map:
             for node in row:
-                if node == "x" or node == "":
+                if type(node) is not NODE.Node:
                     continue
-                
+                if node.getType() == "TREASURE":
+                    pygame.draw.circle(
+                        self.__node_surface, (255, 215, 0), 
+                        (node.getX()*100+50, node.getY()*100+50),
+                        30
+                    )
                 elif node.getType() == "TREASURE":
                     pygame.draw.circle(
                         self.__node_surface, (255, 215, 0), 
@@ -41,7 +46,7 @@ class NodeMap:
 
         for row in self.__node_map:
             for x in row:
-                string = string + (x + " ").ljust(15, " ")
+                string = string + (x.__str__() + " ").ljust(15, " ")
             string = string + "\n"
 
         return string
