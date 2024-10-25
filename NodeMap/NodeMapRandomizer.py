@@ -24,7 +24,8 @@ def randomizeConnections(node_map):
     # 0 (Start Node)
     nodes = getNodesInColumn(node_map, 1, False)
     for node in nodes:
-        node_map.drawConnection((0, 2, node.getX(), node.getY()))
+        if node.exists():
+            node_map.drawConnection((0, 2, node.getX(), node.getY()))
     
     # The rest of them
     for i in range(1, 6):
@@ -42,13 +43,13 @@ def connectColumns(node_map, left_side, right_side):
     botL = 4
     botR = 4
 
-    while ((type(left_side[topL]) != NODE.Node)):
+    while (not left_side[topL].exists()):
         topL = topL + 1
-    while (type(right_side[topR]) != NODE.Node):
+    while (not right_side[topR].exists()):
         topR = topR + 1
-    while ((type(left_side[botL]) != NODE.Node)):
+    while (not left_side[botL].exists()):
         botL = botL - 1
-    while (type(right_side[botR]) != NODE.Node):
+    while (not right_side[botR].exists()):
         botR = botR - 1
     
     node_map.drawConnection((left_side[topL].getX(), left_side[topL].getY(),
@@ -58,14 +59,14 @@ def connectColumns(node_map, left_side, right_side):
                             right_side[botR].getX(), right_side[botR].getY()))
     
     # Nodes going straight across
-    for node in left_side:
+    '''for node in left_side:
         if (type(node) != NODE.Node):
             continue
         if (type(right_side[node.getY()]) == NODE.Node):
             node_map.drawConnection((node.getX(), node.getY(),
                                      node.getX()+1, node.getY()))
-        
-        '''if ((type(right_side[node.getY()-1]) == NODE.Node)
+
+        if ((type(right_side[node.getY()-1]) == NODE.Node)
         and (type(right_side[node.getY()]) == NODE.Node)):
             if random.randint(0, 1) == 1:
                 node_map.drawConnection((node.getX(), node.getY(),
@@ -92,10 +93,7 @@ def connectColumns(node_map, left_side, right_side):
 def getNodesInColumn(node_map, col_idx, pad):
     nodes = []
     for i in range(5):
-        if (type(node_map.getCell(col_idx, i)) == NODE.Node):
-            nodes.append(node_map.getCell(col_idx, i))
-        elif pad:
-            nodes.append("x")
+        nodes.append(node_map.getCell(col_idx, i))
     
     return nodes
 
@@ -193,11 +191,8 @@ def checkValidityOfCell(node_map, x, y):
         to_check = [y-1, y, y+1]
     
     for prev_y in to_check:
-        if type(node_map.getCell(x-1, prev_y)) is NODE.Node:
-            #print(f"Found!: {node_map.getCell(x-1, prev_y)} @ ({x-1}, {prev_y})")
+        if node_map.getCell(x-1, prev_y).exists():
             return True
-        #else:
-            #print(f"Stupid Stupid: {node_map.getCell(x-1, prev_y)} @ ({x-1}, {prev_y})")
 
     return False
 
@@ -217,7 +212,7 @@ def chooseRandomFromWeights(raw_weights):
 def countNodesInColumn(node_map, col_idx):
     amount = 0
     for i in range(5):
-        if (type(node_map.getCell(col_idx, i)) == NODE.Node):
+        if (node_map.getCell(col_idx, i).exists()):
             amount = amount + 1
     
     return amount

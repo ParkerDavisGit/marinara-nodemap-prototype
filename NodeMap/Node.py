@@ -1,8 +1,9 @@
 class Node:
     def __init__(self):
-        self.__x    = 0
-        self.__y    = 0
-        self.__type = ""
+        self.__x      = 0
+        self.__y      = 0
+        self.__type   = ""
+        self.__exists = False
     
     #=====[ GETTERS ]==========
     def getPos(self):
@@ -17,6 +18,9 @@ class Node:
     def getType(self):
         return self.__type
 
+    def exists(self):
+        return self.__exists
+
     #=====[ SETTERS ]==========
     def at(self, x, y):
         self.__x = x
@@ -25,6 +29,10 @@ class Node:
     
     def ofType(self, new_type):
         self.__type = new_type
+        return self
+
+    def isReal(self):
+        self.__exists = True
         return self
 
     #=====[ DUNDER ZONE ]==========

@@ -1,9 +1,10 @@
 import pygame
 import NodeMap.Node as NODE
+import copy
 
 class NodeMap:
     def __init__(self, node_surface, connection_surface):
-        self.__node_map = [["x" for x in range(8)] for y in range(5)]
+        self.__node_map = getBlankNodeMap()
         self.__connections        = []
 
         self.__node_surface       = node_surface
@@ -71,12 +72,12 @@ class NodeMap:
         self.drawNode(node)
     
     def setCell(self, x: int, y: int, type: str):
-        new_node = NODE.Node().at(x, y).ofType(type)
+        new_node = NODE.Node().at(x, y).ofType(type).isReal()
         self.__node_map[y][x] = new_node
         self.drawNode(new_node)
     
     def reset(self):
-        self.__node_map = [["x " for x in range(8)] for y in range(5)]
+        self.__node_map = getBlankNodeMap()
         self.__node_surface      .fill((0, 0, 0, 0))
         self.__connection_surface.fill((0, 0, 0, 0))
     
@@ -94,3 +95,16 @@ class NodeMap:
             string = string + "\n"
 
         return string
+
+
+
+def getBlankNodeMap():
+    nodemap = []
+
+    for y in range(5):
+        temp_row = []
+        for x in range(8):
+            temp_row.append(NODE.Node().at(x, y))
+        nodemap.append(temp_row)
+    
+    return nodemap
