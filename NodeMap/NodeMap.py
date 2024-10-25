@@ -59,6 +59,11 @@ class NodeMap:
     #=====[ GETTERS ]==========
     def getCell(self, x, y):
         return self.__node_map[y][x]
+    
+    def containsConnection(self, connection):
+        if connection in self.__connections:
+            return True
+        return False
 
     #=====[ SETTERS ]==========
     def setCell(self, node):
