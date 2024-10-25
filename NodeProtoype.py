@@ -1,6 +1,7 @@
 import Window
 import InputHandler
 import NodeMap.NodeMap as NODEMAP
+import NodeMap.NodeMapRandomizer as NMRANDOM
 
 import pygame
 
@@ -19,6 +20,7 @@ class NodePrototype:
     def testFunc(self):
         print("Activating Test Mode")
         print("")
+        NMRANDOM.randomizeNodeMap(self.__nodes)
         print("")
         print("Deactivating Test Mode")
 

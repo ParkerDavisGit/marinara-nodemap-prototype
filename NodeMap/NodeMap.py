@@ -50,7 +50,7 @@ class NodeMap:
             )
     
     def drawConnection(self, connection):
-        pygame.draw.line(self.__node_surface, (0, 0, 0),
+        pygame.draw.line(self.__connection_surface, (0, 0, 0),
             (connection[0]*100+50, connection[1]*100+50),
             (connection[2]*100+50, connection[3]*100+50), 3
         )
@@ -59,16 +59,26 @@ class NodeMap:
     #=====[ GETTERS ]==========
     def getCell(self, x, y):
         return self.__node_map[y][x]
+    
+    def containsConnection(self, connection):
+        if connection in self.__connections:
+            return True
+        return False
 
     #=====[ SETTERS ]==========
     def setCell(self, node):
         self.setCell(node.getPos()[0], node.getPos()[1], node)
+        self.drawNode(node)
     
     def setCell(self, x: int, y: int, type: str):
-        self.__node_map[y][x] = NODE.Node().at(x, y).ofType(type)
+        new_node = NODE.Node().at(x, y).ofType(type)
+        self.__node_map[y][x] = new_node
+        self.drawNode(new_node)
     
     def reset(self):
         self.__node_map = [["x " for x in range(8)] for y in range(5)]
+        self.__node_surface      .fill((0, 0, 0, 0))
+        self.__connection_surface.fill((0, 0, 0, 0))
     
     def addConnection(self, x1, y1, x2, y2):
         self.__connections.append((x1, y1, x2, y2))
