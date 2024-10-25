@@ -32,8 +32,8 @@ class Window:
     def render(self):
         self.window.blit(self.__background_surface, (0, 0))
         self.window.blit(self.__grid_surface, (0, 0))
-        self.window.blit(self.__node_surface, (0, 0))
         self.window.blit(self.__connection_surface, (0, 0))
+        self.window.blit(self.__node_surface, (0, 0))
         pygame.display.flip()
     
     

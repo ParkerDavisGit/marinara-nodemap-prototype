@@ -50,7 +50,7 @@ class NodeMap:
             )
     
     def drawConnection(self, connection):
-        pygame.draw.line(self.__node_surface, (0, 0, 0),
+        pygame.draw.line(self.__connection_surface, (0, 0, 0),
             (connection[0]*100+50, connection[1]*100+50),
             (connection[2]*100+50, connection[3]*100+50), 3
         )
