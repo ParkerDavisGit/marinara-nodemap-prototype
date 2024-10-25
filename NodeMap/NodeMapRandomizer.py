@@ -64,6 +64,29 @@ def connectColumns(node_map, left_side, right_side):
         if (type(right_side[node.getY()]) == NODE.Node):
             node_map.drawConnection((node.getX(), node.getY(),
                                      node.getX()+1, node.getY()))
+        
+        '''if ((type(right_side[node.getY()-1]) == NODE.Node)
+        and (type(right_side[node.getY()]) == NODE.Node)):
+            if random.randint(0, 1) == 1:
+                node_map.drawConnection((node.getX(), node.getY(),
+                                     node.getX()+1, node.getY()-1))
+                node_map.drawConnection((node.getX(), node.getY(),
+                                     node.getX()+1, node.getY()+1))
+            elif random.randint(0, 1) == 1:
+                node_map.drawConnection((node.getX(), node.getY(),
+                                     node.getX()+1, node.getY()+1))
+            else:
+                node_map.drawConnection((node.getX(), node.getY(),
+                                     node.getX()+1, node.getY()-1))
+            
+        elif (type(right_side[node.getY()-1]) == NODE.Node):
+            node_map.drawConnection((node.getX(), node.getY(),
+                                     node.getX()+1, node.getY()-1))
+        
+        else:
+            node_map.drawConnection((node.getX(), node.getY(),
+                                     node.getX()+1, node.getY()+1))'''
+        
 
 
 def getNodesInColumn(node_map, col_idx, pad):
@@ -142,7 +165,10 @@ def randomizeColumn(node_map, col_idx, rules):
     else:
         possible_idxs = [0, 1, 2, 3, 4]
     while amount > 0:
-        potential_idx = possible_idxs.pop(random.randint(0,len(possible_idxs)-1))
+        if len(possible_idxs) > 1:
+            potential_idx = possible_idxs.pop(random.randint(0,len(possible_idxs)-1))
+        else:
+            potential_idx = possible_idxs[0]
         #print("Checking (" + str(col_idx) + ", " + str(potential_idx) + ")")
         if checkValidityOfCell(node_map, col_idx, potential_idx):
             #print("Yep!")
