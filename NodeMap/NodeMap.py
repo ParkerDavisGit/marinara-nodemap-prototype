@@ -72,6 +72,8 @@ class NodeMap:
     
     def reset(self):
         self.__node_map = [["x " for x in range(8)] for y in range(5)]
+        self.__node_surface      .fill((0, 0, 0, 0))
+        self.__connection_surface.fill((0, 0, 0, 0))
     
     def addConnection(self, x1, y1, x2, y2):
         self.__connections.append((x1, y1, x2, y2))
