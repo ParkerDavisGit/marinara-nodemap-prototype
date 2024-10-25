@@ -20,9 +20,6 @@ class NodePrototype:
     def testFunc(self):
         print("Activating Test Mode")
         print("")
-        self.__nodes.setCell(3, 1, "TREASURE")
-        self.__nodes.setCell(3, 2, "TREASURE")
-        self.__nodes.setCell(3, 3, "TREASURE")
         NMRANDOM.randomizeNodeMap(self.__nodes)
         print("")
         print("Deactivating Test Mode")
