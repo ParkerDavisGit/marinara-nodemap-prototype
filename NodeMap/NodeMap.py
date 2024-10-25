@@ -63,9 +63,12 @@ class NodeMap:
     #=====[ SETTERS ]==========
     def setCell(self, node):
         self.setCell(node.getPos()[0], node.getPos()[1], node)
+        self.drawNode(node)
     
     def setCell(self, x: int, y: int, type: str):
-        self.__node_map[y][x] = NODE.Node().at(x, y).ofType(type)
+        new_node = NODE.Node().at(x, y).ofType(type)
+        self.__node_map[y][x] = new_node
+        self.drawNode(new_node)
     
     def reset(self):
         self.__node_map = [["x " for x in range(8)] for y in range(5)]
