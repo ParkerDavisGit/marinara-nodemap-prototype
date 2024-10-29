@@ -1,5 +1,4 @@
 import Window
-import InputHandler
 import NodeMap.NodeMap as NODEMAP
 import NodeMap.NodeMapRandomizer as NMRANDOM
 
@@ -12,9 +11,6 @@ class NodePrototype:
         self.__nodes   = NODEMAP.NodeMap(
             self.__window.getNodeSurface(), self.__window.getConnectionSurface())
         self.__running = True
-
-        self.__input_handler = InputHandler.InputHandler()
-
 
     #=====[ THE BIG THREE ]==========
     def testFunc(self):

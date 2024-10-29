@@ -1,6 +1,5 @@
 import pygame
 import NodeMap.Node as NODE
-import copy
 
 class NodeMap:
     def __init__(self, node_surface, connection_surface):
