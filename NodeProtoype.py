@@ -16,7 +16,7 @@ class NodePrototype:
     def testFunc(self):
         print("Activating Test Mode")
         print("")
-        NMRANDOM.randomizeNodeMap(self.__nodes)
+        
         print("")
         print("Deactivating Test Mode")
 
@@ -29,7 +29,7 @@ class NodePrototype:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.regenerateNodes()
-                    self.testFunc()
+                    #self.testFunc()
                 
                 if event.key == pygame.K_ESCAPE:
                     self.quitProgram()
@@ -46,7 +46,7 @@ class NodePrototype:
         self.__running = False
     
     def regenerateNodes(self):
-        ...
+        NMRANDOM.randomizeNodeMap(self.__nodes)
 
     #=====[ MAIN GAME LOOP ]==========
     def run(self):
