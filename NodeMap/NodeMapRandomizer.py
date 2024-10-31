@@ -35,7 +35,7 @@ def randomizeConnections(node_map):
         right = getNodesInColumn(node_map, i+1)
         connectColumns(node_map, left, right)
     
-    for i in range(1,6):
+    for i in range(1,7):
         for node in getNodesInColumn(node_map, i):
             doubleCheckNode(node_map, node)
 
