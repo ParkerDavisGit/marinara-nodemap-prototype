@@ -1,7 +1,7 @@
 import random
 import NodeMap.Node as NODE
 
-CONNECTION_CHANCE = 75
+CONNECTION_CHANCE = 85
 
 def randomizeNodeMap(node_map):
     node_map.reset()
@@ -10,8 +10,14 @@ def randomizeNodeMap(node_map):
 
     # PRESET NODES
     node_map.setCell(0, 2, "EXPLORATION")
-    node_map.setCell(6, 1, "SHOP")
-    node_map.setCell(6, 3, "SHOP")
+    
+    if random.randint(0, 1) == 1:
+        node_map.setCell(6, 1, "SHOP")
+        node_map.setCell(6, 3, "EXPLORATION")
+    else:
+        node_map.setCell(6, 3, "SHOP")
+        node_map.setCell(6, 1, "EXPLORATION")
+    
     node_map.setCell(7, 2, "BOSS")
 
     for i in range(1,len(data)-2):
