@@ -1,6 +1,8 @@
 import random
 import NodeMap.Node as NODE
 
+CONNECTION_CHANCE = 75
+
 def randomizeNodeMap(node_map):
     node_map.reset()
     data = open("RANDOMIZATION_OPTIONS.txt", "r").read().split("\n")
@@ -22,78 +24,101 @@ def randomizeNodeMap(node_map):
 
 def randomizeConnections(node_map):
     # 0 (Start Node)
-    nodes = getNodesInColumn(node_map, 1, False)
+    nodes = getNodesInColumn(node_map, 1)
     for node in nodes:
         if node.exists():
             node_map.drawConnection((0, 2, node.getX(), node.getY()))
     
     # The rest of them
     for i in range(1, 6):
-        left  = getNodesInColumn(node_map, i  , True)
-        right = getNodesInColumn(node_map, i+1, True)
+        left  = getNodesInColumn(node_map, i)
+        right = getNodesInColumn(node_map, i+1)
         connectColumns(node_map, left, right)
+    
+    for i in range(1,6):
+        for node in getNodesInColumn(node_map, i):
+            doubleCheckNode(node_map, node)
 
     # 6 (Shops to Boss)
     node_map.drawConnection((6, 1, 7, 2))
     node_map.drawConnection((6, 3, 7, 2))
 
+
+def doubleCheckNode(node_map, node):
+    nodes_behind = getNodesBehind(node_map, node)
+    while not node_map.isConnectedTo(node):
+        potential_node = random.choice(nodes_behind)
+        if node_map.connectionValid((potential_node, node)):
+            node_map.drawConnection((potential_node, node))
+    
+    nodes_ahead = getNodesAhead(node_map, node)
+    while not node_map.hasConnectionFrom(node):
+        potential_node = random.choice(nodes_ahead)
+        if node_map.connectionValid((node, potential_node)):
+            node_map.drawConnection((node, potential_node))
+
+def getNodesBehind(node_map, node):
+    to_test = []
+    if node.getY() == 0:
+        to_test = [0, 1]
+    elif node.getY() == 4:
+        to_test = [3, 4]
+    else:
+        to_test = [node.getY()-1, node.getY(), node.getY()+1]
+    
+    nodes = []
+    for i in to_test:
+        if node_map.getCell(node.getX()-1, i).exists():
+            nodes.append(node_map.getCell(node.getX()-1, i))
+    
+    return nodes
+
+
+def getNodesAhead(node_map, node):
+    to_test = []
+    if node.getY() == 0:
+        to_test = [0, 1]
+    elif node.getY() == 4:
+        to_test = [3, 4]
+    else:
+        to_test = [node.getY()-1, node.getY(), node.getY()+1]
+    
+    nodes = []
+    for i in to_test:
+        if node_map.getCell(node.getX()+1, i).exists():
+            nodes.append(node_map.getCell(node.getX()+1, i))
+        
+    
+    return nodes
+
+
 def connectColumns(node_map, left_side, right_side):
-    topL = 0
-    topR = 0
-    botL = 4
-    botR = 4
-
-    while (not left_side[topL].exists()):
-        topL = topL + 1
-    while (not right_side[topR].exists()):
-        topR = topR + 1
-    while (not left_side[botL].exists()):
-        botL = botL - 1
-    while (not right_side[botR].exists()):
-        botR = botR - 1
-    
-    node_map.drawConnection((left_side[topL].getX(), left_side[topL].getY(),
-                            right_side[topR].getX(), right_side[topR].getY()))
-
-    node_map.drawConnection((left_side[botL].getX(), left_side[botL].getY(),
-                            right_side[botR].getX(), right_side[botR].getY()))
-    
-    # Nodes going straight across
-    '''for node in left_side:
-        if (type(node) != NODE.Node):
-            continue
-        if (type(right_side[node.getY()]) == NODE.Node):
-            node_map.drawConnection((node.getX(), node.getY(),
-                                     node.getX()+1, node.getY()))
-
-        if ((type(right_side[node.getY()-1]) == NODE.Node)
-        and (type(right_side[node.getY()]) == NODE.Node)):
-            if random.randint(0, 1) == 1:
-                node_map.drawConnection((node.getX(), node.getY(),
-                                     node.getX()+1, node.getY()-1))
-                node_map.drawConnection((node.getX(), node.getY(),
-                                     node.getX()+1, node.getY()+1))
-            elif random.randint(0, 1) == 1:
-                node_map.drawConnection((node.getX(), node.getY(),
-                                     node.getX()+1, node.getY()+1))
-            else:
-                node_map.drawConnection((node.getX(), node.getY(),
-                                     node.getX()+1, node.getY()-1))
+    for node_left in left_side:
+        for node_right in right_side:
+            if not areNodesAdjacent(node_left, node_right):
+                continue
             
-        elif (type(right_side[node.getY()-1]) == NODE.Node):
-            node_map.drawConnection((node.getX(), node.getY(),
-                                     node.getX()+1, node.getY()-1))
-        
-        else:
-            node_map.drawConnection((node.getX(), node.getY(),
-                                     node.getX()+1, node.getY()+1))'''
-        
+            # 75% chance connection is created
+            if random.randint(0, 100) < CONNECTION_CHANCE:
+                continue
+
+            if not node_map.connectionValid((node_left, node_right)):
+                continue
+
+            node_map.drawConnection((node_left, node_right))
+
+    
+def areNodesAdjacent(n1, n2):
+    if abs(n1.getY() - n2.getY()) < 2:
+        return True
+    return False
 
 
-def getNodesInColumn(node_map, col_idx, pad):
+def getNodesInColumn(node_map, col_idx):
     nodes = []
     for i in range(5):
-        nodes.append(node_map.getCell(col_idx, i))
+        if node_map.getCell(col_idx, i).exists():
+            nodes.append(node_map.getCell(col_idx, i))
     
     return nodes
 
@@ -101,7 +126,7 @@ def getNodesInColumn(node_map, col_idx, pad):
 def checkColumnForward(node_map, col_idx):
     for y in range(5):
         #print(f"CHECKING ({col_idx}, {y})")
-        if not (type(node_map.getCell(col_idx, y)) is NODE.Node):
+        if not (node_map.getCell(col_idx, y).exists()):
             continue
 
         valid = False
@@ -114,7 +139,7 @@ def checkColumnForward(node_map, col_idx):
             to_check = [y-1, y, y+1]
         
         for forward_y in to_check:
-            if (type(node_map.getCell(col_idx+1, forward_y)) is NODE.Node):
+            if (node_map.getCell(col_idx+1, forward_y).exists()):
                 valid = True
         
         if not valid:
